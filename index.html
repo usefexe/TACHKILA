@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="./index.css">
+
+</head>
+
+<body>
+
+    <header class="w-screen  bg-sky-800 h-16 border border-b-indigo-500 ">
+        <nav class="flex justify-between">
+            <img src="./logo.png" alt="logo" class="w-40 mt-1 ml-3">
+            <UL class="flex gap-2 mt-1">
+                <li class="mt-4 p0 font-bold text-orange-500 text-sm">
+                    <i class="fa-solid fa-shirt w-4"></i>
+                    GB
+                </li>
+                <li class="mt-4 p0 font-bold text-cyan-600 text-sm">
+                    <i class="fa-solid fa-shirt w-4"></i>
+                    DEF
+                </li>
+                <li class="mt-4 p0 font-bold text-green-400 text-sm">
+                    <i class="fa-solid fa-shirt w-4"></i>
+                    MIL
+                </li>
+                <li class="mt-4 p0 font-bold text-red-600 text-sm">
+                    <i class="fa-solid fa-shirt w-4"></i>
+                    ATT
+                </li>
+            </UL>
+
+            <ol class="inline-flex">
+                <p class="mt-4.5 text-mist-400  font-bold mr-1">Shema</p>
+                <button class="bg-sky-950 h-8 w-16 mt-4 mr-10 rounded-xl">
+                    4-4-2
+                </button>
+            </ol>
+        </nav>
+    </header>
+
+    <div class="flex">
+
+        <!-- aside -->
+
+
+        <aside class="w-80 h-144 bg-sky-800 ">
+            <button class="text-white bg-green-500 h-10 w-55 mt-4 ml-4 rounded-xl hover:bg-green-600 " id="ajouter"><i
+                    class="fa-solid fa-plus mr-1 "></i>ajouter un jouer</button>
+            <ul class="flex justify-between mt-5">
+                <p class="text-mist-300  font-bold ml-4">effectif</p>
+                <button class="bg-sky-950 h-6.5 w-20  rounded-xl text-mist-300  font-medium text-sm mr-3">
+                    1 jouers
+                </button>
+            </ul>
+            <ul class="PlayerList w-60 bg-sky-950 h-110 mt-4 ml-1.5 rounded-xl border-1 border-sky-400 flex flex-col">
+                <li class="flex p-2 border-b-1 border-sky-400">
+                    <button class="">
+                        <div
+                            class="gk  bg w-8 h-8 bg-[url('./gk.png')] bg-cover bg-center bg-no-repeat  pt-2 text-slate-200 font-bold text-sm ">
+                            1</div>
+                    </button>
+                    <span class="ml-2 leading-6">
+                        <p class="text-slate-200 font-bold text-sm ">Bono</p>
+                        <p class="text-slate-400 font-semibold text-sm">goalkepper</p>
+                    </span>
+              <!-- a editer apres -->
+                    <select id="position"
+                        class="mt-2.5 ml-2 w-full max-w-11 h-8 rounded-lg border border-slate-700 bg-slate-800 px-3 py-2.5 text-sm font-semibold text-slate-300  focus:border-blue-500">
+                        
+
+                        <option value="GB" class="bg-slate-800 font-bold text-amber-500">
+                            GB - Gardien
+                        </option>
+
+                        <option value="DG" class="bg-slate-800 font-bold text-blue-500">
+                            LB - Défenseur gauche
+                        </option>
+
+                        <option value="DC" class="bg-slate-800 font-bold text-blue-500">
+                            DC - Défenseur central
+                        </option>
+
+                        <option value="MC" class="bg-slate-800 font-bold text-green-500">
+                            MC - Milieu central
+                        </option>
+
+                        <option value="BU" class="bg-slate-800 font-bold text-red-500">
+                            ST - Stircker
+                        </option>
+                    </select>
+
+
+                    <div id="PlayerAction" class="  mt-2 text-sm ml-3.5  ">
+
+                        <i class="fa-solid fa-trash text-slate-400 "></i>
+                        <i class="fa-duotone fa-solid fa-pen  text-slate-400 ml-3"></i>
+                    </div>
+                </li>
+
+
+
+
+
+
+
+            </ul>
+        </aside>
+
+
+        <!-- terain -->
+        <main class="w-full h-[576px] bg-[url('./terain.png')] bg-cover bg-center bg-no-repeat terain">
+
+            <div class="playergk ml-10 flex flex-col mt-15">
+                <div class="gk ml-2 bg w-20 h-20 bg-[url('./gk.png')] bg-cover bg-center bg-no-repeat  ">
+
+                </div>
+                <button
+                    class="w-25 font-bold  bg-amber-600 text-sm text-white rounded-xl h-6 border-1 border-yellow-300">GK</button>
+            </div>
+
+            <div class="playerlb ml-40 mt-8">
+                <div class="gk ml-2 bg w-20 h-20 bg-[url('./def.png')] bg-cover bg-center bg-no-repeat  ">
+
+                </div>
+                <button
+                    class="w-25  font-bold bg-sky-950 text-sm text-white rounded-xl h-6 border-1 border-cyan-400">LB</button>
+            </div>
+
+            <div class="playerrb ml-40 ">
+                <div class="gk ml-2 bg w-20 h-20 bg-[url('./def.png')] bg-cover bg-center bg-no-repeat  "></div>
+                <button
+                    class="w-25 font-bold bg-sky-950 text-sm text-white rounded-xl h-6 border-1 border-cyan-400">RB</button>
+            </div>
+
+            <div class="playercb2 ">
+                <div class="gk ml-2 bg w-20 h-20 bg-[url('./def.png')] bg-cover bg-center bg-no-repeat  "></div>
+                <button
+                    class="w-25 font-bold bg-sky-950 text-sm text-white rounded-xl h-6 border-1 border-cyan-400">CB</button>
+            </div>
+            <div class="playercb1 mb-10">
+                <div class="gk ml-2 bg w-20 h-20 bg-[url('./def.png')] bg-cover bg-center bg-no-repeat  "></div>
+                <button
+                    class="w-25 font-bold bg-sky-950 text-sm text-white rounded-xl h-6 border-1 border-cyan-400">CB</button>
+            </div>
+
+
+            <div class="playerlm mt-6 ml-10">
+                <div class="gk ml-2 bg w-20 h-20 bg-[url('./mid.png')] bg-cover bg-center bg-no-repeat  "></div>
+                <button
+                    class="w-25 font-bold bg-green-800 text-sm text-white rounded-xl h-6 border-1 border-lime-400">LM</button>
+            </div>
+            <div class="cm1 mt-6 ml-10">
+                <div class="gk ml-2 bg w-20 h-20 bg-[url('./mid.png')] bg-cover bg-center bg-no-repeat  "></div>
+                <button
+                    class="w-25 font-bold bg-green-800 text-sm text-white rounded-xl h-6 border-1 border-lime-400">CM</button>
+            </div>
+            <div class="cm2 mt-6 ml-10">
+                <div class="gk ml-2 bg w-20 h-20 bg-[url('./mid.png')] bg-cover bg-center bg-no-repeat  "></div>
+                <button
+                    class="w-25 font-bold bg-green-800 text-sm text-white rounded-xl h-6 border-1 border-lime-400">CM</button>
+            </div>
+            <div class="playerrm  ml-10">
+                <div class="gk ml-2 bg w-20 h-20 bg-[url('./mid.png')] bg-cover bg-center bg-no-repeat  "></div>
+                <button
+                    class="w-25 font-bold bg-green-800 text-sm text-white rounded-xl h-6 border-1 border-lime-400">RM</button>
+            </div>
+
+            <!--  -->
+            <div class="st1">
+                <div class="gk ml-2 bg w-20 h-20 bg-[url('./att.png')] bg-cover bg-center bg-no-repeat  "></div>
+                <button
+                    class="w-25 font-bold bg-red-800 text-sm text-white rounded-xl h-6 border-1 border-red-400">ST</button>
+            </div>
+
+
+            <div class="st2 mt-10">
+                <div class="gk ml-2 bg w-20 h-20 bg-[url('./att.png')] bg-cover bg-center bg-no-repeat  "></div>
+                <button
+                    class="w-25 font-bold bg-red-800 text-sm text-white rounded-xl h-6 border-1 border-red-400">ST</button>
+            </div>
+
+
+
+        </main>
+
+    </div>
+
+    <div id="modalOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 heading">
+
+
+        <div id="playerModal"
+            class="relative w-full max-w-lg mx-4 rounded-2xl border border-slate-700 bg-slate-800 p-7 shadow-2xl">
+
+
+            <div class="flex items-center justify-between mb-7">
+                <h2 class="text-xl font-bold text-white">
+                    Ajouter un joueur
+                </h2>
+
+                <button id="closeModal" type="button" class="text-slate-400 hover:text-white text-2xl transition"
+                    aria-label="Fermer le modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+
+            <div class="space-y-6">
+
+
+                <div>
+                    <label class="block mb-2 text-sm font-semibold text-slate-300">
+                        Nom complet
+                    </label>
+
+                    <input type="text" id="playerName" placeholder="Ex. Ayoub Mansouri"
+                        class="w-full rounded-xl border border-slate-600 bg-slate-900 px-4 py-3 text-white outline-none placeholder:text-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30">
+                </div>
+
+
+                <div>
+                    <p class="mb-3 text-sm font-semibold text-slate-300">
+                        Poste
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-2" id="positionPlaye">
+
+                        <button type="button" data-position="GB"
+                            class="flex items-center gap-2 rounded-xl border border-slate-600 bg-slate-900 px-3 py-3 text-sm font-semibold text-slate-200 hover:border-amber-500 position">
+                            <i class="fa-solid fa-circle text-amber-500 text-xs"></i>
+                            Gardien
+                        </button>
+
+                        <button type="button" data-position="DEF"
+                            class="flex items-center gap-2 rounded-xl border border-slate-600 bg-slate-900 px-3 py-3 text-sm font-semibold text-slate-200 hover:border-blue-500 position">
+                            <i class="fa-solid fa-circle text-blue-500 text-xs"></i>
+                            Défenseur
+                        </button>
+
+                        <button type="button" data-position="MIL"
+                            class="flex items-center gap-2 rounded-xl border border-slate-600 bg-slate-900 px-3 py-3 text-sm font-semibold text-slate-200 hover:border-green-500 position">
+                            <i class="fa-solid fa-circle text-green-500 text-xs"></i>
+                            Milieu
+                        </button>
+
+                        <button type="button" data-position="ATT"
+                            class="flex items-center gap-2 rounded-xl border border-slate-600 bg-slate-900 px-3 py-3 text-sm font-semibold text-slate-200 hover:border-red-500 position">
+                            <i class="fa-solid fa-circle text-red-500 text-xs "></i>
+                            Attaquant
+                        </button>
+
+                    </div>
+                </div>
+
+
+                <div>
+                    <label for="playerNumber" class="block mb-2 text-sm font-semibold text-slate-300">
+                        Numéro (1 à 99)
+                    </label>
+
+                    <input type="number" id="playerNumber" min="1" max="99" placeholder="Ex. 7"
+                        class="w-full rounded-xl border border-slate-600 bg-slate-900 px-4 py-3 text-white outline-none placeholder:text-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30">
+                </div>
+
+            </div>
+
+
+            <div class="mt-10 flex justify-end gap-3">
+
+                <button type="button" id="cancelModal"
+                    class="rounded-xl bg-slate-700 px-5 py-3 font-semibold text-white transition hover:bg-slate-600">
+                    Annuler
+                </button>
+
+                <button type="button" id="addPlayer"
+                    class="rounded-xl bg-green-600 px-5 py-3 font-semibold text-white transition hover:bg-green-500">
+                    Ajouter
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+<script src="./index.js"></script>
+
+</html>
