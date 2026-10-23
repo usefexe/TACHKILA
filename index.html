@@ -54,13 +54,13 @@
                     class="fa-solid fa-plus mr-1 "></i>ajouter un jouer</button>
             <ul class="flex justify-between mt-5">
                 <p class="text-mist-300  font-bold ml-4">effectif</p>
-                <button class="bg-sky-950 h-6.5 w-20  rounded-xl text-mist-300  font-medium text-sm mr-3">
+                <button class="bg-sky-950 h-6.5 w-20  rounded-xl text-mist-300  font-medium text-sm mr-3" id="countPlayer">
                     1 jouers
                 </button>
             </ul>
-            <ul class="PlayerList w-60 bg-sky-950 h-110 mt-4 ml-1.5 rounded-xl border-1 border-sky-400 flex flex-col">
-                <li class="flex p-2 border-b-1 border-sky-400">
-                    <button class="">
+            <ul class="PlayerList w-60 bg-sky-950 h-110 mt-4 ml-1.5 rounded-xl border-1 border-sky-400 flex flex-col overflow-auto" id="PlayerList">
+                <!-- <li class="flex p-2 border-b-1 border-sky-400">
+                     <button class="">
                         <div
                             class="gk  bg w-8 h-8 bg-[url('./gk.png')] bg-cover bg-center bg-no-repeat  pt-2 text-slate-200 font-bold text-sm ">
                             1</div>
@@ -69,7 +69,7 @@
                         <p class="text-slate-200 font-bold text-sm ">Bono</p>
                         <p class="text-slate-400 font-semibold text-sm">goalkepper</p>
                     </span>
-              <!-- a editer apres -->
+              a editeer 
                     <select id="position"
                         class="mt-2.5 ml-2 w-full max-w-11 h-8 rounded-lg border border-slate-700 bg-slate-800 px-3 py-2.5 text-sm font-semibold text-slate-300  focus:border-blue-500">
                         
@@ -100,8 +100,8 @@
 
                         <i class="fa-solid fa-trash text-slate-400 "></i>
                         <i class="fa-duotone fa-solid fa-pen  text-slate-400 ml-3"></i>
-                    </div>
-                </li>
+                    </div> 
+                </li> -->
 
 
 
@@ -114,7 +114,8 @@
 
 
         <!-- terain -->
-        <main class="w-full h-[576px] bg-[url('./terain.png')] bg-cover bg-center bg-no-repeat terain">
+        <main class="w-full h-[576px] bg-[url('./terain.png')] bg-cover b
+        g-center bg-no-repeat terain">
 
             <div class="playergk ml-10 flex flex-col mt-15">
                 <div class="gk ml-2 bg w-20 h-20 bg-[url('./gk.png')] bg-cover bg-center bg-no-repeat  ">
@@ -148,7 +149,7 @@
                 <button
                     class="w-25 font-bold bg-sky-950 text-sm text-white rounded-xl h-6 border-1 border-cyan-400">CB</button>
             </div>
-
+             
 
             <div class="playerlm mt-6 ml-10">
                 <div class="gk ml-2 bg w-20 h-20 bg-[url('./mid.png')] bg-cover bg-center bg-no-repeat  "></div>
@@ -190,7 +191,10 @@
         </main>
 
     </div>
-
+              <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg heading" id="sucssec">
+    <p class="text-lg font-semibold">Order Status: Confirmed</p>
+    <p>Your order has been successfully confirmed and is now being processed.</p>
+</div>
     <div id="modalOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 heading">
 
 
@@ -210,7 +214,7 @@
             </div>
 
 
-            <div class="space-y-6">
+            <div class="space-y-3">
 
 
                 <div>
@@ -221,28 +225,31 @@
                     <input type="text" id="playerName" placeholder="Ex. Ayoub Mansouri"
                         class="w-full rounded-xl border border-slate-600 bg-slate-900 px-4 py-3 text-white outline-none placeholder:text-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30">
                 </div>
+                  <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700 error" id="nameerror">
+    nom onvalide entrer un nom valide ex: Ramos.
+  </div>
 
 
                 <div>
-                    <p class="mb-3 text-sm font-semibold text-slate-300">
+                    <p class=" text-sm font-semibold text-slate-300">
                         Poste
                     </p>
 
                     <div class="grid grid-cols-2 gap-2" id="positionPlaye">
 
-                        <button type="button" data-position="GB"
+                        <button type="button" data-position="GK" 
                             class="flex items-center gap-2 rounded-xl border border-slate-600 bg-slate-900 px-3 py-3 text-sm font-semibold text-slate-200 hover:border-amber-500 position">
                             <i class="fa-solid fa-circle text-amber-500 text-xs"></i>
                             Gardien
                         </button>
 
-                        <button type="button" data-position="DEF"
+                        <button type="button" data-position="CB"
                             class="flex items-center gap-2 rounded-xl border border-slate-600 bg-slate-900 px-3 py-3 text-sm font-semibold text-slate-200 hover:border-blue-500 position">
                             <i class="fa-solid fa-circle text-blue-500 text-xs"></i>
                             Défenseur
                         </button>
 
-                        <button type="button" data-position="MIL"
+                        <button type="button" data-position="CM"
                             class="flex items-center gap-2 rounded-xl border border-slate-600 bg-slate-900 px-3 py-3 text-sm font-semibold text-slate-200 hover:border-green-500 position">
                             <i class="fa-solid fa-circle text-green-500 text-xs"></i>
                             Milieu
@@ -253,8 +260,10 @@
                             <i class="fa-solid fa-circle text-red-500 text-xs "></i>
                             Attaquant
                         </button>
-
                     </div>
+                                           <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700 flex-1 mt-2 error" id="posterror">
+      imposible dajjouter un jouer sans post 
+  </div>
                 </div>
 
 
@@ -263,14 +272,17 @@
                         Numéro (1 à 99)
                     </label>
 
-                    <input type="number" id="playerNumber" min="1" max="99" placeholder="Ex. 7"
+                    <input type="number" id="playerNumber" value="0" min="1" max="99" placeholder="Ex. 7"
                         class="w-full rounded-xl border border-slate-600 bg-slate-900 px-4 py-3 text-white outline-none placeholder:text-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30">
                 </div>
-
+              <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700 error " id="nbrerror">
+      entrer un nombre valide .
+  </div>
+         
             </div>
 
 
-            <div class="mt-10 flex justify-end gap-3">
+            <div class=" flex justify-end gap-3 mt-1">
 
                 <button type="button" id="cancelModal"
                     class="rounded-xl bg-slate-700 px-5 py-3 font-semibold text-white transition hover:bg-slate-600">
@@ -278,14 +290,22 @@
                 </button>
 
                 <button type="button" id="addPlayer"
-                    class="rounded-xl bg-green-600 px-5 py-3 font-semibold text-white transition hover:bg-green-500">
+                    class="rounded-xl bg-green-600 px-5 py-3 font-semibold text-white transition hover:bg-green-500 ">
                     Ajouter
                 </button>
 
             </div>
 
         </div>
+
     </div>
+
+
+    <!-- modal de modification -->
+
+    
+        
+
 </body>
 <script src="./index.js"></script>
 
