@@ -1,17 +1,18 @@
 const ajouterbutton = document.getElementById("ajouter")
 const xmodale = document.getElementById("closeModal")
 const modale = document.getElementById("modalOverlay")
+const modifmodale = document.getElementById("modifmodalOverlay")
 const saveModal = document.getElementById("addPlayer")
 const anuller = document.getElementById("cancelModal")
 const countplayer = document.getElementById("countPlayer")
 const listBntouce = [ { name: "Modric", nubmer: 10, post: "CM", inlineup: false }]
-
+ const PlayerList = document.getElementById("PlayerList")
 
 //aficher les jouuers
 
 
 function showPlayer() {
-    const PlayerList = document.getElementById("PlayerList")
+   
 PlayerList.innerHTML=""
     countplayer.textContent = `${listBntouce.length} Joueurs`
     let Tshirt = ""
@@ -71,8 +72,8 @@ PlayerList.innerHTML=""
 
                     <div id="PlayerAction" class="  mt-2 text-sm ml-3   ">
 
-                        <i class="fa-solid fa-trash text-slate-400 "></i>
-                        <i class="fa-duotone fa-solid fa-pen  text-slate-400 ml-2"></i>
+                        <i class="fa-solid fa-trash text-slate-400 " id="deleteplayer" data-number=${el.nubmer}></i>
+                        <i class="fa-duotone fa-solid fa-pen  text-slate-400 ml-2" id="modifierplayer" data-number=${el.nubmer}></i>
                     </div>
         `)
         PlayerList.appendChild(playercard)
@@ -135,7 +136,7 @@ function ajouterPlayer() {
     //chnager value nombre et handling des ereur 
     playernumberinp.addEventListener('blur', (e) => {
         numbervalue = e.target.value
-          console.log(listBntouce)
+         
             let found = false
             listBntouce.forEach(element => {
                if(element.nubmer==numbervalue){
@@ -234,6 +235,7 @@ xmodale.onclick = () => {
         posterror.classList.add("heading")
         eroornmae.classList.add("heading")
         numbererror.classList.add("heading")
+       
 }
 
 anuller.onclick = () => {
@@ -241,10 +243,159 @@ anuller.onclick = () => {
         posterror.classList.add("heading")
         eroornmae.classList.add("heading")
         numbererror.classList.add("heading")
+      
 }
+//modifierplayer info 
+//suprimer 
 
+
+
+PlayerList.addEventListener('click', (e)=>{
+    const deletep=e.target.closest("#deleteplayer")
+   const  modifierplayer=e.target.closest('#modifierplayer')
+    if(deletep){
+
+
+    
+    for (let i = 0; i < listBntouce.length; i++) {
+        if(listBntouce[i].nubmer==deletep.dataset.number){
+            listBntouce.splice(i,1)
+        }
+        
+    }
+      deletep.parentElement.parentElement.remove()
+    
+
+    }else if(modifierplayer){
+        let playerinfo=listBntouce.find((el)=>{
+          return   el.nubmer==modifierplayer.dataset.number 
+        })
+        
+ 
+    
+     modale.classList.remove("heading")
+
+    let finderror = false
+    
+ 
+
+
+    const playernameinp = document.getElementById("playerName")
+    playernameinp.value=playerinfo.name
+    const playernumberinp = document.getElementById("playerNumber")
+    playernumberinp.value=playerinfo.nubmer
+  
+    let namevalue = playerinfo.name
+    let numbervalue = playerinfo.nubmer
+   let haseror=false
+
+    //chnager valeur de name // hander ereur de nom 
+    playernameinp.addEventListener('blur', (e) => {
+      
+        let nmRgx = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžæœÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ ,.'-]{3,10}$/
+        namevalue = e.target.value
+        if (nmRgx.test(namevalue)) {
+            eroornmae.classList.add("heading")
+               haseror=true
+
+
+     
+        } else {
+            eroornmae.classList.remove("heading")
+             haseror=false
+        }
+
+    })
+
+
+
+    //chnager value nombre et handling des ereur 
+    playernumberinp.addEventListener('blur', (e) => {
+        numbervalue = e.target.value
+         
+            let found = false
+            listBntouce.filter((el)=>{
+                return el.nubmer!==playerinfo.number
+            }).forEach(element => {
+               if(element.nubmer==numbervalue){
+                found=true
+              
+               }
+            });
+       
+        if(found||numbervalue<1||numbervalue>99){
+            numbererror.classList.remove('heading')
+            haseror=true
+        }else{
+          numbererror.classList.add('heading')
+          haseror=false
+        
+ } 
+ 
+}
+ 
+) 
+
+    //chnger valeur de post
+    let post =  playerinfo.post
+    const postionparent = document.getElementById("positionPlaye")
+    postionparent.addEventListener("click", (e) => {
+        let btn = e.target.closest('.position')
+
+        if (!btn) return
+        post = btn.dataset.position
+
+
+    })
+
+    //validation de modal
+   
+  
+
+    saveModal.onclick = (e) => {
+       
+          if(namevalue.trim()==="" ){
+    eroornmae.classList.remove("heading")
+     haseror=true
+    }else{
+        eroornmae.classList.add("heading")
+     haseror=false
+    }
+    
+    if(numbervalue==0 ){
+    numbererror.classList.remove("heading")
+    haseror=true
+    }else{
+       numbererror.classList.add("heading")
+    haseror=false
+    }
+     if(post.trim()===""){
+        e.preventDefault()
+        posterror.classList.remove("heading")
+    }else if(haseror){
+     e.preventDefault()
+    }else{ 
+     const plyerindex=listBntouce.indexOf(playerinfo)
+     const sucssec=document.getElementById("sucssec")
+        let newplayer={ name: namevalue, nubmer: numbervalue, post: post, inlineup: false }
+        listBntouce[plyerindex]=newplayer
+        modale.classList.add("heading")
+          showPlayer() 
+    }
+}    
+
+
+   
+    }else{
+        return
+    }
+     
+})
 showPlayer()
-ajouterPlayer()
+
+
+
+
 
 
 
