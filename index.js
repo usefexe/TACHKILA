@@ -5,7 +5,7 @@ const modifmodale = document.getElementById("modifmodalOverlay")
 const saveModal = document.getElementById("addPlayer")
 const anuller = document.getElementById("cancelModal")
 const countplayer = document.getElementById("countPlayer")
-const listBntouce = [ { name: "Modric", nubmer: 10, post: "CM", inlineup: false  , positoninlinup:"CM1"}]
+const listBntouce = [ { name: "Modric", nubmer: 10, post: "CM", inlineup: false  , positoninlinup:"CM1"},{ name: "Modric", nubmer: 11, post: "CM", inlineup: false  , positoninlinup:"st1"}]
  const PlayerList = document.getElementById("PlayerList")
  const terrainPostes = {
     gk: document.getElementById('gk'),
@@ -20,18 +20,37 @@ const listBntouce = [ { name: "Modric", nubmer: 10, post: "CM", inlineup: false 
     st1: document.getElementById('st1'),
     st2: document.getElementById('st2')
 };
-
+ 
 
 
  function showInlinup(){
+    //clean all post 
+    Object.keys(terrainPostes).forEach((key)=>{
+    const post=terrainPostes[key]
+         let postplayer=post.querySelector('button')
+                let number=post.querySelector('div')
+                number.textContent=""
+
+                postplayer.textContent=key.toUpperCase()
+    })
+    //show player in post from aarray
     listBntouce.forEach((el)=>{
             if (el.positoninlinup==="libre"){
-                libre
+                return
+            }else{
+                let post = terrainPostes[el.positoninlinup.toLowerCase()];
+                let postplayer=post.querySelector('button')
+                let number=post.querySelector('div')
+                number.textContent=el.nubmer 
+
+                postplayer.textContent=el.name
+
+               
             }
     })
  }
 //aficher les jouuers
-
+showInlinup()
 
 function showPlayer() {
    
@@ -134,7 +153,7 @@ PlayerList.innerHTML=""
 
 
 
-// ajoute d un joueur 
+// ajoute player
 
 
 const playerNameInp = document.getElementById("playerName");
@@ -194,6 +213,7 @@ function resetModal() {
 
 // modal ajoute
 function ouvrirAjout() {
+    saveModal.textContent="ajouter"
     resetModal();
     cacherErreurs();
     modale.classList.remove("heading");
@@ -201,6 +221,7 @@ function ouvrirAjout() {
 
 // modal modif
 function ouvrirModification(player) {
+    saveModal.textContent="modifier"
     playerToEdit = player;
 
     playerNameInp.value = player.name;
@@ -268,7 +289,7 @@ function sauvegarderPlayer(e) {
         playerToEdit.name = newPlayer.name;
         playerToEdit.nubmer = newPlayer.nubmer;
         playerToEdit.post = newPlayer.post;
-
+     showInlinup()
     } else {
     
         listBntouce.push(newPlayer);
@@ -341,7 +362,7 @@ console.log(chngerposition.value)
 showPlayer()
 
 
-ajouterPlayer()
+
 
 
 
