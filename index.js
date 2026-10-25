@@ -5,9 +5,27 @@ const modifmodale = document.getElementById("modifmodalOverlay")
 const saveModal = document.getElementById("addPlayer")
 const anuller = document.getElementById("cancelModal")
 const countplayer = document.getElementById("countPlayer")
-const listBntouce = [ { name: "Modric", nubmer: 10, post: "CM", inlineup: false  , positoninlinup:"CM1"}]
- const PlayerList = document.getElementById("PlayerList")
- const terrainPostes = {
+let listBntouce =null
+const alertchangepostsucssec = document.getElementById("sucssecpostmodif")
+const postechangerror = document.getElementById("postechangerror")
+const postplienerror=document.getElementById("postplienerror")
+const chnagetoband=document.getElementById("chnagetoband")
+const deleteModal= document.getElementById("deleteModal")
+const anullerdelete=document.getElementById("cancelDelete")
+const confirmedelete=document.getElementById("confirmDelete")
+const deletealert=document.getElementById("deletealert")
+const playerNameInp = document.getElementById("playerName");
+const playerNumberInp = document.getElementById("playerNumber");
+const nameError = document.getElementById("nameerror");
+const postError = document.getElementById("posterror");
+const numberError = document.getElementById("nbrerror");
+const success = document.getElementById("sucssec");
+const positionParent = document.getElementById("positionPlaye");
+let playerToEdit = null;
+let selectedPost = "";
+ let text= success.querySelector('#text')
+let playertodelete=null
+const terrainPostes = {
     gk: document.getElementById('gk'),
     lb: document.getElementById('lb'),
     rb: document.getElementById('rb'),
@@ -20,22 +38,44 @@ const listBntouce = [ { name: "Modric", nubmer: 10, post: "CM", inlineup: false 
     st1: document.getElementById('st1'),
     st2: document.getElementById('st2')
 };
+ listBntouce = JSON.parse(localStorage.getItem("joueurs")) ||[]
 
+function saveInlocalstorage(){
+    localStorage.setItem("joueurs",JSON.stringify(listBntouce))
+}
 
+function showInlinup() {
+    //clean all post 
+    Object.keys(terrainPostes).forEach((key) => {
+        const post = terrainPostes[key]
+        let postplayer = post.querySelector('button')
+        let number = post.querySelector('div')
+        number.textContent = ""
 
- function showInlinup(){
-    listBntouce.forEach((el)=>{
-            if (el.positoninlinup==="libre"){
-                libre
-            }
+        postplayer.textContent = key.toUpperCase()
     })
- }
-//aficher les jouuers
+    //show player in post from aarray
+    listBntouce.forEach((el) => {
+        if (el.positoninlinup === "libre") {
+            return
+        } else {
+            let post = terrainPostes[el.positoninlinup.toLowerCase()];
+            let postplayer = post.querySelector('button')
+            let number = post.querySelector('div')
+            number.textContent = el.nubmer
 
+            postplayer.textContent = el.name
+
+
+        }
+    })
+}
+//aficher les jouuers
+showInlinup()
 
 function showPlayer() {
-   
-PlayerList.innerHTML=""
+
+    PlayerList.innerHTML = ""
     countplayer.textContent = `${listBntouce.length} Joueurs`
     let Tshirt = ""
     let cardcolor = ""
@@ -66,7 +106,7 @@ PlayerList.innerHTML=""
                         <p class="text-slate-400 font-semibold text-sm">${el.post}</p>
                     </span>
               
-                 <select id="positionchange" data-number="${el.nubmer}"
+                 <select id="positionchange" data-number=${el.nubmer}
     class="mt-2.5 ml-2 w-full max-w-11 h-8 rounded-lg border border-slate-700 bg-slate-800 px-3 py-2.5 text-sm font-semibold text-slate-300 focus:border-blue-500">
         <option value="Libre" ${el.positoninlinup === "Libre" ? "selected" : ""} class="bg-slate-800 font-bold text-slate-500">
             Libre
@@ -134,22 +174,8 @@ PlayerList.innerHTML=""
 
 
 
-// ajoute d un joueur 
+// ajoute player
 
-
-const playerNameInp = document.getElementById("playerName");
-const playerNumberInp = document.getElementById("playerNumber");
-
-const nameError = document.getElementById("nameerror");
-const postError = document.getElementById("posterror");
-const numberError = document.getElementById("nbrerror");
-const success = document.getElementById("sucssec");
-
-const positionParent = document.getElementById("positionPlaye");
-
-
-let playerToEdit = null;
-let selectedPost = "";
 
 // Validation number
 function validerNom(name) {
@@ -194,6 +220,8 @@ function resetModal() {
 
 // modal ajoute
 function ouvrirAjout() {
+     text.textContent=" confirmation : le jouer ajouter  secces."
+    saveModal.textContent = "ajouter"
     resetModal();
     cacherErreurs();
     modale.classList.remove("heading");
@@ -201,11 +229,22 @@ function ouvrirAjout() {
 
 // modal modif
 function ouvrirModification(player) {
+    saveModal.textContent = "modifier"
+   
     playerToEdit = player;
+   text.textContent="conffiramtion :joueuurs modifier avec seccues"
 
     playerNameInp.value = player.name;
     playerNumberInp.value = player.nubmer;
+   
     selectedPost = player.post;
+    
+    positionParent.querySelectorAll(".position").forEach(el => {
+    el.classList.toggle(
+        "selected",
+        el.dataset.position === player.post
+    );
+});
 
     cacherErreurs();
     modale.classList.remove("heading");
@@ -218,6 +257,13 @@ positionParent.addEventListener("click", (e) => {
     if (!btn || !positionParent.contains(btn)) return;
 
     selectedPost = btn.dataset.position;
+    positionParent.querySelectorAll(".position").forEach(el => {
+    el.classList.remove(
+        "selected",
+        
+    );
+});
+     btn.classList.add("selected");
 
     postError.classList.add("heading");
 });
@@ -260,18 +306,27 @@ function sauvegarderPlayer(e) {
         name: playerNameInp.value.trim(),
         nubmer: Number(playerNumberInp.value),
         post: selectedPost,
-        inlineup : false
+        inlineup: false,
+        positoninlinup: "libre"
+        
     };
 
     if (playerToEdit) {
-        
+
         playerToEdit.name = newPlayer.name;
         playerToEdit.nubmer = newPlayer.nubmer;
+        if( playerToEdit.post!==newPlayer.post){
+            playerToEdit.positoninlinup='libre'
+             showInlinup()
+        }
         playerToEdit.post = newPlayer.post;
-
+        saveInlocalstorage()
+     
+        
     } else {
-    
+
         listBntouce.push(newPlayer);
+        saveInlocalstorage()
     }
 
     showPlayer();
@@ -299,8 +354,9 @@ PlayerList.addEventListener("click", (e) => {
         });
 
         if (index !== -1) {
-            listBntouce.splice(index, 1);
-            showPlayer();
+          playertodelete=index
+          deleteModal.classList.remove("heading")
+          
         }
 
     } else if (editBtn) {
@@ -316,6 +372,29 @@ PlayerList.addEventListener("click", (e) => {
     }
 });
 
+// supresiion confermation 
+
+confirmedelete.addEventListener('click',()=>{
+      listBntouce.splice(playertodelete, 1);
+            showPlayer();
+            deleteModal.classList.add('heading')
+            deletealert.classList.remove('heading')
+            setTimeout(() => {
+               deletealert.classList.add('heading') 
+            }, 3000);
+            playerToEdit=null
+            saveInlocalstorage()
+})
+
+
+anullerdelete.addEventListener("click", ()=>{
+     deleteModal.classList.add('heading')
+     playerToEdit=null
+})
+
+
+
+
 
 ajouterbutton.addEventListener("click", ouvrirAjout);
 
@@ -327,21 +406,92 @@ saveModal.addEventListener("click", sauvegarderPlayer);
 
 
 
-
 // CNAGER LE POST 
-PlayerList.addEventListener('change',(e)=>{
-const chngerposition=e.target.closest("#positionchange")
-if(chngerposition){
-console.log(chngerposition.value)
-}else{
-    return
+
+function postMatch(choix, player) {
+    let match = false
+    if (choix === "GB") {
+        player.post === "GK" ? match = true : match = false
+    } else if (["CM1", "CM2", "RM", "LM"].includes(choix)) {
+        player.post === "CM" ? match = true : match = false
+    } else if (["CB1", "CB2", "RB", "LB"].includes(choix)) {
+        player.post === "CB" ? match = true : match = false
+    } else if (["ST1", "ST2"].includes(choix)) {
+        player.post === "ATT" ? match = true : match = false
+    }
+    return match
 }
+
+
+function findPlayr(number) {
+    const player = listBntouce.filter(element => {
+        return element.nubmer == number
+    });
+
+    return player[0]
+}
+
+
+function changerPost(player, postchoix) {
+    const postexist = listBntouce.findIndex((el) => {
+        return el.positoninlinup === postchoix
+
+    })
+     if(postchoix==="Libre"){
+  player.positoninlinup="libre"
+  
+            chnagetoband.classList.remove("heading")
+            setTimeout(() => {
+                chnagetoband.classList.add("heading");
+            }, 3000);
+   
+     }
+    else if (postexist === -1) {
+        if (postMatch(postchoix, player)) {
+            player.positoninlinup = postchoix
+          
+            alertchangepostsucssec.classList.remove("heading")
+            setTimeout(() => {
+                alertchangepostsucssec.classList.add("heading");
+            }, 3000);
+        } else {
+           
+               postechangerror.classList.remove("heading")
+                setTimeout(() => {
+                postechangerror.classList.add("heading");
+            }, 3000);
+
+        }
+    }else{
+     
+               postplienerror.classList.remove("heading")
+                setTimeout(() => {
+                postplienerror.classList.add("heading");
+            }, 3000);
+    }
+      showInlinup()
+      showPlayer()
+      saveInlocalstorage()
+}
+
+
+PlayerList.addEventListener('change', (e) => {
+    const chngerposition = e.target.closest("#positionchange")
+    if (chngerposition) {
+
+        let number = chngerposition.dataset.number
+        const player = findPlayr(number)
+        const postchoix = chngerposition.value
+        changerPost(player, postchoix)
+    } else {
+        return
+    }
 }
 )
 showPlayer()
 
 
-ajouterPlayer()
+
 
 
 
