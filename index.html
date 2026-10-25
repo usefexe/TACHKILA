@@ -191,9 +191,9 @@
         </main>
 
     </div>
-              <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg heading" id="sucssec">
-    <p class="text-lg font-semibold">Order Status: Confirmed</p>
-    <p>Your order has been successfully confirmed and is now being processed.</p>
+              <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 fixed top-20 left-100  z-[100]  rounded-lg heading" id="sucssec">
+    <p class="text-lg font-semibold">sucsees</p>
+    <p> confirmation : le jouer ajouter  secces.</p>
 </div>
     <div id="modalOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 heading">
 
@@ -301,10 +301,61 @@
     </div>
 
 
-    <!-- modal de modification -->
+    <div
+    class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg  fixed top-20 left-100  z-[100] heading"
+    id="sucssecpostmodif"
+>
+    <p class="text-lg font-semibold">Joueur affecté avec succès !</p>
+    <p>Le joueur a été placé dans son poste sur le terrain.</p>
+</div>
+
+
+  <div id="postechangerror"
+            class=" mb-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg shadow-lg  fixed top-20 left-100  z-[100] heading">
+            <p class="font-semibold">Erreur !</p>
+            <p>Impossible d'ajouter ua un post non match.</p>
+        </div>
+
+  <div id="postplienerror"
+            class=" mb-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg shadow-lg  fixed top-20 left-100  z-[100] heading">
+            <p class="font-semibold">Erreur !</p>
+            <p>le post selicitione continet un autre joueurs</p>
+        </div>
+
+        <div id="chnagetoband"
+            class=" mb-2 bg-amber-100 border-l-4 border-amber-500 text-amber-700 p-4 rounded-lg shadow-lg  fixed top-20 left-100  z-[100] heading">
+            <p class="font-semibold">done</p>
+            <p>le jouer est en bande touche mnt </p>
+        </div>
+
+
+
+          <div id="deletealert"
+            class=" mb-2 bg-amber-100 border-l-4 border-amber-500 text-amber-700 p-4 rounded-lg shadow-lg  fixed top-20 left-100  z-[100] heading">
+            <p class="font-semibold">done</p>
+            <p>le jouer est suprime </p>
+        </div>
 
     
         
+
+        <div id="deleteModal"
+    class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 heading">
+
+    <div class="flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-800 p-3 shadow-xl">
+        
+         <button id="confirmDelete" type="button"
+            class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-500">
+            Confirmer
+        </button>
+
+        <button id="cancelDelete" type="button"
+            class="rounded-lg bg-slate-700 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-600">
+            Annuler
+        </button>
+
+    </div>
+</div>
 
 </body>
 <script src="./index.js"></script>
