@@ -5,8 +5,7 @@ const modifmodale = document.getElementById("modifmodalOverlay")
 const saveModal = document.getElementById("addPlayer")
 const anuller = document.getElementById("cancelModal")
 const countplayer = document.getElementById("countPlayer")
-const listBntouce = [{ name: "Modric", nubmer: 10, post: "CM", inlineup: false, positoninlinup: "CM1" }, { name: "Modric", nubmer: 11, post: "ATT", inlineup: false, positoninlinup: "ST1" }]
-const PlayerList = document.getElementById("PlayerList")
+let listBntouce =null
 const alertchangepostsucssec = document.getElementById("sucssecpostmodif")
 const postechangerror = document.getElementById("postechangerror")
 const postplienerror=document.getElementById("postplienerror")
@@ -15,6 +14,16 @@ const deleteModal= document.getElementById("deleteModal")
 const anullerdelete=document.getElementById("cancelDelete")
 const confirmedelete=document.getElementById("confirmDelete")
 const deletealert=document.getElementById("deletealert")
+const playerNameInp = document.getElementById("playerName");
+const playerNumberInp = document.getElementById("playerNumber");
+const nameError = document.getElementById("nameerror");
+const postError = document.getElementById("posterror");
+const numberError = document.getElementById("nbrerror");
+const success = document.getElementById("sucssec");
+const positionParent = document.getElementById("positionPlaye");
+let playerToEdit = null;
+let selectedPost = "";
+ let text= success.querySelector('#text')
 let playertodelete=null
 const terrainPostes = {
     gk: document.getElementById('gk'),
@@ -29,8 +38,11 @@ const terrainPostes = {
     st1: document.getElementById('st1'),
     st2: document.getElementById('st2')
 };
+ listBntouce = JSON.parse(localStorage.getItem("joueurs")) ||[]
 
-
+function saveInlocalstorage(){
+    localStorage.setItem("joueurs",JSON.stringify(listBntouce))
+}
 
 function showInlinup() {
     //clean all post 
@@ -165,20 +177,6 @@ function showPlayer() {
 // ajoute player
 
 
-const playerNameInp = document.getElementById("playerName");
-const playerNumberInp = document.getElementById("playerNumber");
-
-const nameError = document.getElementById("nameerror");
-const postError = document.getElementById("posterror");
-const numberError = document.getElementById("nbrerror");
-const success = document.getElementById("sucssec");
-
-const positionParent = document.getElementById("positionPlaye");
-
-
-let playerToEdit = null;
-let selectedPost = "";
-
 // Validation number
 function validerNom(name) {
     const nmRgx = /^[a-zA-ZàáâäãåąčćęèéêëėįíîïłńòóôöõøùúûüųūÿýżźñçčšžæœÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ ,.'-]{3,10}$/;
@@ -222,6 +220,7 @@ function resetModal() {
 
 // modal ajoute
 function ouvrirAjout() {
+     text.textContent=" confirmation : le jouer ajouter  secces."
     saveModal.textContent = "ajouter"
     resetModal();
     cacherErreurs();
@@ -231,11 +230,21 @@ function ouvrirAjout() {
 // modal modif
 function ouvrirModification(player) {
     saveModal.textContent = "modifier"
+   
     playerToEdit = player;
+   text.textContent="conffiramtion :joueuurs modifier avec seccues"
 
     playerNameInp.value = player.name;
     playerNumberInp.value = player.nubmer;
+   
     selectedPost = player.post;
+    
+    positionParent.querySelectorAll(".position").forEach(el => {
+    el.classList.toggle(
+        "selected",
+        el.dataset.position === player.post
+    );
+});
 
     cacherErreurs();
     modale.classList.remove("heading");
@@ -248,6 +257,13 @@ positionParent.addEventListener("click", (e) => {
     if (!btn || !positionParent.contains(btn)) return;
 
     selectedPost = btn.dataset.position;
+    positionParent.querySelectorAll(".position").forEach(el => {
+    el.classList.remove(
+        "selected",
+        
+    );
+});
+     btn.classList.add("selected");
 
     postError.classList.add("heading");
 });
@@ -292,18 +308,25 @@ function sauvegarderPlayer(e) {
         post: selectedPost,
         inlineup: false,
         positoninlinup: "libre"
+        
     };
 
     if (playerToEdit) {
 
         playerToEdit.name = newPlayer.name;
         playerToEdit.nubmer = newPlayer.nubmer;
+        if( playerToEdit.post!==newPlayer.post){
+            playerToEdit.positoninlinup='libre'
+             showInlinup()
+        }
         playerToEdit.post = newPlayer.post;
-        // to add removing post if user change post player 
-        showInlinup()
+        saveInlocalstorage()
+     
+        
     } else {
 
         listBntouce.push(newPlayer);
+        saveInlocalstorage()
     }
 
     showPlayer();
@@ -360,6 +383,7 @@ confirmedelete.addEventListener('click',()=>{
                deletealert.classList.add('heading') 
             }, 3000);
             playerToEdit=null
+            saveInlocalstorage()
 })
 
 
@@ -447,6 +471,7 @@ function changerPost(player, postchoix) {
     }
       showInlinup()
       showPlayer()
+      saveInlocalstorage()
 }
 
 
