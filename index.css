@@ -55,3 +55,8 @@
  display: none;
 
 }
+
+.position.selected {
+    background-color: #2dd4bf;
+    border-color: #2dd4bf;
+}
