@@ -26,7 +26,7 @@ let selectedPost = "";
  let text= success.querySelector('#text')
 let playertodelete=null
 const terrainPostes = {
-    gk: document.getElementById('gk'),
+    gb: document.getElementById('gk'),
     lb: document.getElementById('lb'),
     rb: document.getElementById('rb'),
     cb1: document.getElementById('cb1'),
@@ -225,6 +225,11 @@ function ouvrirAjout() {
     resetModal();
     cacherErreurs();
     modale.classList.remove("heading");
+        positionParent.querySelectorAll(".position").forEach(el => {
+    el.classList.remove(
+        "selected",
+    );
+});
 }
 
 // modal modif
