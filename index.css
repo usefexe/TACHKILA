@@ -60,3 +60,22 @@
     background-color: #2dd4bf;
     border-color: #2dd4bf;
 }
+.notapost{
+    opacity: 0.3;
+}
+   @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+.terain >.selectedpost{
+   
+    
+    
+ 
+    animation: bounce 1s ease-in-out infinite;
+}
