@@ -5,7 +5,9 @@ const modifmodale = document.getElementById("modifmodalOverlay")
 const saveModal = document.getElementById("addPlayer")
 const anuller = document.getElementById("cancelModal")
 const countplayer = document.getElementById("countPlayer")
+const Reset=document.getElementById("Reset")
 let listBntouce = null
+const autoassigned=document.getElementById('autoassigned')
 const alertchangepostsucssec = document.getElementById("sucssecpostmodif")
 const postechangerror = document.getElementById("postechangerror")
 const postplienerror = document.getElementById("postplienerror")
@@ -23,6 +25,7 @@ const success = document.getElementById("sucssec");
 const positionParent = document.getElementById("positionPlaye");
 let playerToEdit = null;
 let selectedPost = "";
+const restalert=document.getElementById('restalert')
 let playertodraged=null
 let postdraged=null
 let text = success.querySelector('#text')
@@ -605,3 +608,44 @@ undisablepost();
         postdraged = null;
     });
 });
+//
+Reset.addEventListener('click',()=>{
+      listBntouce.forEach((el)=>{
+        el.positoninlinup="libre"
+        saveInlocalstorage()
+        showInlinup()
+        restalert.classList.remove('heading')
+        setTimeout(() => {
+            restalert.classList.add('heading')
+        }, 3000);
+      })
+})
+
+
+autoassigned.addEventListener('click',()=>{
+     const postes = ["GB","LB","RB","CB1","CB2","LM","CM1","CM2","RM","ST1","ST2"];
+    listBntouce.forEach((player) => {
+        if (player.positoninlinup.toLowerCase() !== "libre") {
+            return;
+        }
+        const postDisponible = postes.find((poste) => {
+
+            const dejaOccupe = listBntouce.some((el) => {
+                return el.positoninlinup.toUpperCase() === poste;
+            });
+
+            return !dejaOccupe && postMatch(poste, player);
+        });
+
+      
+        if (postDisponible) {
+            player.positoninlinup = postDisponible;
+        }
+
+    });
+
+  
+    showInlinup();
+    showPlayer();
+    saveInlocalstorage();
+})
