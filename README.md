@@ -3,9 +3,9 @@
 
 Application web interactive permettant à l'entraîneur du club amateur **Atlas FC** de gérer son effectif et de composer son équipe sur un terrain schématisé en **4-4-2**.
 
-🔗 **Démo (Vercel) :** [`À_REMPLACER_PAR_LE_LIEN_VERCEL`](https://tachkila-eta.vercel.app/)
-🔗 **Dépôt GitHub :** [github.com/usefexe/TACHKILA](https://github.com/usefexe/TACHKILA)
-🔗 **Planification (Jira) :** [Board SCRUM](https://youssefaitsalh545.atlassian.net/jira/softwar)
+🔗 **Démo (Vercel) :** [`TACHKILA APP`](https://tachkila-eta.vercel.app/)<br>
+🔗 **Dépôt GitHub :** [github.com/usefexe/TACHKILA](https://github.com/usefexe/TACHKILA)<br>
+🔗 **Planification (Jira) :** [Board SCRUM](https://youssefaitsalh545.atlassian.net/jira/softwar)<br>
 
 ---
 
