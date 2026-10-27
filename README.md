@@ -6,6 +6,7 @@ Application web interactive permettant à l'entraîneur du club amateur **Atlas 
 🔗 **Démo (Vercel) :** [`TACHKILA APP`](https://tachkila-eta.vercel.app/)<br>
 🔗 **Dépôt GitHub :** [github.com/usefexe/TACHKILA](https://github.com/usefexe/TACHKILA)<br>
 🔗 **Planification (Jira) :** [Board SCRUM](https://youssefaitsalh545.atlassian.net/jira/softwar)<br>
+🔗 **Presntation (canva) :** [Dmonstration](https://canva.link/9t7pgmxa0frhw0e)<br>
 
 ---
 
