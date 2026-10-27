@@ -13,11 +13,11 @@
 
 <body>
 
-    <header class="w-screen  bg-sky-800 h-16 border border-b-indigo-500 ">
-        <nav class="flex justify-between">
+    <header class="w-screen  bg-sky-800 h-16 border border-b-indigo-500  max-lg:h-auto max-lg:py-3   ">
+        <nav class="flex justify-between items-center    max-lg:flex-col max-lg:gap-1  ">
             <img src="./logo.png" alt="logo" class="w-40 mt-1 ml-3">
             <UL class="flex gap-2 mt-1">
-                <li class="mt-4 p0 font-bold text-orange-500 text-sm">
+                <li class="mt-4 p0 font-bold text-orange-500 text-sm"> 
                     <i class="fa-solid fa-shirt w-4"></i>
                     GB
                 </li>
@@ -35,7 +35,7 @@
                 </li>
             </UL>
 
-            <ol class="inline-flex">
+            <ol class="inline-flex  max-lg:ml-8">
                 <p class="mt-4.5 text-mist-400  font-bold mr-1">Shema</p>
                 <button class="bg-sky-950 h-8 w-16 mt-4 mr-10 rounded-xl">
                     4-4-2
@@ -44,22 +44,23 @@
         </nav>
     </header>
 
-    <div class="flex">
+    <div class="flex max-lg:flex-col">
 
         <!-- aside -->
 
 
-        <aside class="w-80 h-144 bg-sky-800 ">
+        <aside class="w-65 h-144 bg-sky-800  max-lg:w-full max-lg:h-auto max-lg:p-3  max-lg:justify-center">
             <button class="text-white bg-green-500 h-10 w-55 mt-4 ml-4 rounded-xl hover:bg-green-600 " id="ajouter"><i
                     class="fa-solid fa-plus mr-1 "></i>ajouter un jouer</button>
-            <ul class="flex justify-between mt-5">
+            <ul class="flex justify-between mt-5  ">
                 <p class="text-mist-300  font-bold ml-4">effectif</p>
                 <button class="bg-sky-950 h-6.5 w-20  rounded-xl text-mist-300  font-medium text-sm mr-3"
                     id="countPlayer">
                     1 jouers
                 </button>
             </ul>
-            <ul class="PlayerList w-60 bg-sky-950 h-110 mt-4 ml-1.5 rounded-xl border-1 border-sky-400 flex flex-col overflow-auto"
+            <ul class="PlayerList w-60 bg-sky-950 h-110  mt-4 ml-1.5 rounded-xl border-1 border-sky-400 flex flex-col overflow-auto overflow-auto-hidden  max-lg:w-full max-lg:h-14 max-lg:ml-0
+           max-lg:flex-row max-lg:overflow-x-auto max-lg:overflow-y-hidden"
                 id="PlayerList">
                 <!-- <li class="flex p-2 border-b-1 border-sky-400">
                      <button class="">
@@ -116,8 +117,8 @@
 
 
         <!-- terain -->
-        <main class="w-full h-[576px] bg-[url('./terain.png')] bg-cover b
-        g-center bg-no-repeat terain" id="terain" >
+         <div class="flex-1 min-w-0 w-full overflow-x-auto">
+        <main class="w-full min-w-[700px] h-[576px] bg-[url('./terain.png')] bg-cover bg-center bg-no-repeat terain max-w-[950px]" id="terain" >
 
             <div class="playergk ml-10 flex flex-col mt-15" id="gk" >
                 <div
@@ -210,7 +211,7 @@
 
 
 
-        </main>
+        </main></div>
 
     </div>
     <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 fixed top-20 left-100  z-[100]  rounded-lg heading"
