@@ -99,17 +99,17 @@ function showPlayer() {
         const playercard = document.createElement("li")
         playercard.draggable = true;
         playercard.classList.add("playercardliste")
-        const twclass = "flex p-2 border-b-1 border-sky-400"
+        const twclass = "flex p-2 border-b-1 border-sky-400 flex shrink-0 p-2 border-b-1 border-sky-400 max-lg:min-w-[260px] max-lg:border-b-0 max-lg:border-r-1 max-lg:h-13"
         twclass.split(" ").forEach(el => {
             playercard.classList.add(el)
         });
         playercard.insertAdjacentHTML("beforeend", `
-        <button class="">
+        <button class="max-lg:h-10 ">
                         <div
                             class="gk  bg w-8 h-8 bg-[url(${Tshirt})] bg-cover bg-center bg-no-repeat  pt-2 text-slate-200 font-bold text-sm " id="number">
                             ${el.nubmer}</div>
                     </button>
-                    <span class="ml-2 leading-6 w-14.5">
+                    <span class="ml-2 leading-6 w-14.5 max-lg:h-10 ">
                         <p class="text-slate-200 font-bold text-sm ">${el.name}</p>
                         <p class="text-slate-400 font-semibold text-sm">${el.post}</p>
                     </span>
@@ -166,7 +166,7 @@ function showPlayer() {
 </select>
 
 
-                    <div id="PlayerAction" class="  mt-2 text-sm ml-3   ">
+                    <div id="PlayerAction" class="  mt-2 text-sm ml-3 max-lg:h-10  max-lg:ml-7  ">
 
                         <i class="fa-solid fa-trash text-slate-400 " id="deleteplayer" data-number=${el.nubmer}></i>
                         <i class="fa-duotone fa-solid fa-pen  text-slate-400 ml-2" id="modifierplayer" data-number=${el.nubmer}></i>
