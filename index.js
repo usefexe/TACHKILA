@@ -5,15 +5,18 @@ const modifmodale = document.getElementById("modifmodalOverlay")
 const saveModal = document.getElementById("addPlayer")
 const anuller = document.getElementById("cancelModal")
 const countplayer = document.getElementById("countPlayer")
-let listBntouce =null
+const Reset=document.getElementById("Reset")
+ const autoassignedmsg=document.getElementById('autoassignedmsg')
+let listBntouce = null
+const autoassigned=document.getElementById('autoassigned')
 const alertchangepostsucssec = document.getElementById("sucssecpostmodif")
 const postechangerror = document.getElementById("postechangerror")
-const postplienerror=document.getElementById("postplienerror")
-const chnagetoband=document.getElementById("chnagetoband")
-const deleteModal= document.getElementById("deleteModal")
-const anullerdelete=document.getElementById("cancelDelete")
-const confirmedelete=document.getElementById("confirmDelete")
-const deletealert=document.getElementById("deletealert")
+const postplienerror = document.getElementById("postplienerror")
+const chnagetoband = document.getElementById("chnagetoband")
+const deleteModal = document.getElementById("deleteModal")
+const anullerdelete = document.getElementById("cancelDelete")
+const confirmedelete = document.getElementById("confirmDelete")
+const deletealert = document.getElementById("deletealert")
 const playerNameInp = document.getElementById("playerName");
 const playerNumberInp = document.getElementById("playerNumber");
 const nameError = document.getElementById("nameerror");
@@ -23,10 +26,13 @@ const success = document.getElementById("sucssec");
 const positionParent = document.getElementById("positionPlaye");
 let playerToEdit = null;
 let selectedPost = "";
- let text= success.querySelector('#text')
-let playertodelete=null
+const restalert=document.getElementById('restalert')
+let playertodraged=null
+let postdraged=null
+let text = success.querySelector('#text')
+let playertodelete = null
 const terrainPostes = {
-    gk: document.getElementById('gk'),
+    gb: document.getElementById('gk'),
     lb: document.getElementById('lb'),
     rb: document.getElementById('rb'),
     cb1: document.getElementById('cb1'),
@@ -38,10 +44,14 @@ const terrainPostes = {
     st1: document.getElementById('st1'),
     st2: document.getElementById('st2')
 };
- listBntouce = JSON.parse(localStorage.getItem("joueurs")) ||[]
+let listOfplayer = []
 
-function saveInlocalstorage(){
-    localStorage.setItem("joueurs",JSON.stringify(listBntouce))
+listBntouce = JSON.parse(localStorage.getItem("joueurs")) || []
+
+let dragedelement = null
+
+function saveInlocalstorage() {
+    localStorage.setItem("joueurs", JSON.stringify(listBntouce))
 }
 
 function showInlinup() {
@@ -70,7 +80,7 @@ function showInlinup() {
         }
     })
 }
-//aficher les jouuers
+
 showInlinup()
 
 function showPlayer() {
@@ -91,17 +101,19 @@ function showPlayer() {
             Tshirt = "./att.png"
         }
         const playercard = document.createElement("li")
-        const twclass = "flex p-2 border-b-1 border-sky-400"
+        playercard.draggable = true;
+        playercard.classList.add("playercardliste")
+        const twclass = "flex p-2 border-b-1 border-sky-400 flex shrink-0 p-2 border-b-1 border-sky-400 max-lg:min-w-[260px] max-lg:border-b-0 max-lg:border-r-1 max-lg:h-13"
         twclass.split(" ").forEach(el => {
             playercard.classList.add(el)
         });
         playercard.insertAdjacentHTML("beforeend", `
-        <button class="">
+        <button class="max-lg:h-10 ">
                         <div
-                            class="gk  bg w-8 h-8 bg-[url(${Tshirt})] bg-cover bg-center bg-no-repeat  pt-2 text-slate-200 font-bold text-sm ">
+                            class="gk  bg w-8 h-8 bg-[url(${Tshirt})] bg-cover bg-center bg-no-repeat  pt-2 text-slate-200 font-bold text-sm " id="number">
                             ${el.nubmer}</div>
                     </button>
-                    <span class="ml-2 leading-6 w-14.5">
+                    <span class="ml-2 leading-6 w-14.5 max-lg:h-10 ">
                         <p class="text-slate-200 font-bold text-sm ">${el.name}</p>
                         <p class="text-slate-400 font-semibold text-sm">${el.post}</p>
                     </span>
@@ -158,7 +170,7 @@ function showPlayer() {
 </select>
 
 
-                    <div id="PlayerAction" class="  mt-2 text-sm ml-3   ">
+                    <div id="PlayerAction" class="  mt-2 text-sm ml-3 max-lg:h-10  max-lg:ml-7  ">
 
                         <i class="fa-solid fa-trash text-slate-400 " id="deleteplayer" data-number=${el.nubmer}></i>
                         <i class="fa-duotone fa-solid fa-pen  text-slate-400 ml-2" id="modifierplayer" data-number=${el.nubmer}></i>
@@ -167,14 +179,12 @@ function showPlayer() {
         PlayerList.appendChild(playercard)
     });
 
-
+    listOfplayer = document.querySelectorAll(".playercardliste")
 
 }
 
 
 
-
-// ajoute player
 
 
 // Validation number
@@ -220,31 +230,36 @@ function resetModal() {
 
 // modal ajoute
 function ouvrirAjout() {
-     text.textContent=" confirmation : le jouer ajouter  secces."
+    text.textContent = " confirmation : le jouer ajouter  secces."
     saveModal.textContent = "ajouter"
     resetModal();
     cacherErreurs();
     modale.classList.remove("heading");
+    positionParent.querySelectorAll(".position").forEach(el => {
+        el.classList.remove(
+            "selected",
+        );
+    });
 }
 
 // modal modif
 function ouvrirModification(player) {
     saveModal.textContent = "modifier"
-   
+
     playerToEdit = player;
-   text.textContent="conffiramtion :joueuurs modifier avec seccues"
+    text.textContent = "conffiramtion :joueuurs modifier avec seccues"
 
     playerNameInp.value = player.name;
     playerNumberInp.value = player.nubmer;
-   
+
     selectedPost = player.post;
-    
+
     positionParent.querySelectorAll(".position").forEach(el => {
-    el.classList.toggle(
-        "selected",
-        el.dataset.position === player.post
-    );
-});
+        el.classList.toggle(
+            "selected",
+            el.dataset.position === player.post
+        );
+    });
 
     cacherErreurs();
     modale.classList.remove("heading");
@@ -258,12 +273,12 @@ positionParent.addEventListener("click", (e) => {
 
     selectedPost = btn.dataset.position;
     positionParent.querySelectorAll(".position").forEach(el => {
-    el.classList.remove(
-        "selected",
-        
-    );
-});
-     btn.classList.add("selected");
+        el.classList.remove(
+            "selected",
+
+        );
+    });
+    btn.classList.add("selected");
 
     postError.classList.add("heading");
 });
@@ -308,21 +323,21 @@ function sauvegarderPlayer(e) {
         post: selectedPost,
         inlineup: false,
         positoninlinup: "libre"
-        
+
     };
 
     if (playerToEdit) {
 
         playerToEdit.name = newPlayer.name;
         playerToEdit.nubmer = newPlayer.nubmer;
-        if( playerToEdit.post!==newPlayer.post){
-            playerToEdit.positoninlinup='libre'
-             showInlinup()
+        if (playerToEdit.post !== newPlayer.post) {
+            playerToEdit.positoninlinup = 'libre'
+            showInlinup()
         }
         playerToEdit.post = newPlayer.post;
         saveInlocalstorage()
-     
-        
+
+
     } else {
 
         listBntouce.push(newPlayer);
@@ -354,9 +369,9 @@ PlayerList.addEventListener("click", (e) => {
         });
 
         if (index !== -1) {
-          playertodelete=index
-          deleteModal.classList.remove("heading")
-          
+            playertodelete = index
+            deleteModal.classList.remove("heading")
+
         }
 
     } else if (editBtn) {
@@ -374,22 +389,22 @@ PlayerList.addEventListener("click", (e) => {
 
 // supresiion confermation 
 
-confirmedelete.addEventListener('click',()=>{
-      listBntouce.splice(playertodelete, 1);
-            showPlayer();
-            deleteModal.classList.add('heading')
-            deletealert.classList.remove('heading')
-            setTimeout(() => {
-               deletealert.classList.add('heading') 
-            }, 3000);
-            playerToEdit=null
-            saveInlocalstorage()
+confirmedelete.addEventListener('click', () => {
+    listBntouce.splice(playertodelete, 1);
+    showPlayer();
+    deleteModal.classList.add('heading')
+    deletealert.classList.remove('heading')
+    setTimeout(() => {
+        deletealert.classList.add('heading')
+    }, 3000);
+    playerToEdit = null
+    saveInlocalstorage()
 })
 
 
-anullerdelete.addEventListener("click", ()=>{
-     deleteModal.classList.add('heading')
-     playerToEdit=null
+anullerdelete.addEventListener("click", () => {
+    deleteModal.classList.add('heading')
+    playerToEdit = null
 })
 
 
@@ -437,41 +452,41 @@ function changerPost(player, postchoix) {
         return el.positoninlinup === postchoix
 
     })
-     if(postchoix==="Libre"){
-  player.positoninlinup="libre"
-  
-            chnagetoband.classList.remove("heading")
-            setTimeout(() => {
-                chnagetoband.classList.add("heading");
-            }, 3000);
-   
-     }
+    if (postchoix === "Libre") {
+        player.positoninlinup = "libre"
+
+        chnagetoband.classList.remove("heading")
+        setTimeout(() => {
+            chnagetoband.classList.add("heading");
+        }, 3000);
+
+    }
     else if (postexist === -1) {
         if (postMatch(postchoix, player)) {
             player.positoninlinup = postchoix
-          
+
             alertchangepostsucssec.classList.remove("heading")
             setTimeout(() => {
                 alertchangepostsucssec.classList.add("heading");
             }, 3000);
         } else {
-           
-               postechangerror.classList.remove("heading")
-                setTimeout(() => {
+
+            postechangerror.classList.remove("heading")
+            setTimeout(() => {
                 postechangerror.classList.add("heading");
             }, 3000);
 
         }
-    }else{
-     
-               postplienerror.classList.remove("heading")
-                setTimeout(() => {
-                postplienerror.classList.add("heading");
-            }, 3000);
+    } else {
+
+        postplienerror.classList.remove("heading")
+        setTimeout(() => {
+            postplienerror.classList.add("heading");
+        }, 3000);
     }
-      showInlinup()
-      showPlayer()
-      saveInlocalstorage()
+    showInlinup()
+    showPlayer()
+    saveInlocalstorage()
 }
 
 
@@ -492,12 +507,150 @@ showPlayer()
 
 
 
+function desabledpost(exits) {
+  
+      Object.keys(terrainPostes).forEach((key) => {
+        if (!exits.includes(key)) {
+            const post = terrainPostes[key]
+            post.classList.add("notapost")}
+        
+    })
+}
+ function undisablepost(){
+        Object.keys(terrainPostes).forEach((key) => {
+        
+            const post = terrainPostes[key]
+            post.classList.remove("notapost")
+        
+    })
+ }
+
+
+
+function showMatchPost(el) {
+    const number = el.querySelector("#number").textContent
+    const player = findPlayr(number)
+    if(player.post==="GK"){
+        desabledpost(["gb"])
+        
+    }else if(player.post==="CB"){
+        desabledpost(["lb","rb","cb1","cb2"])
+    }else if(player.post==="CM"){
+        desabledpost(["lm","rm","cm1","cm2"])
+    }else if (player.post==="ATT"){
+        desabledpost(["st1","st2"])
+    }
+
+    
+}
 
 
 
 
 
 
+PlayerList.addEventListener("dragstart", (e) => {
+    const card = e.target.closest(".playercardliste");
+    if (!card) return;
+
+    dragedelement = card;
+
+    const number = card.querySelector("#number").textContent.trim();
+    playertodraged = findPlayr(number);
+
+    card.style.opacity = "0.5";
+
+    showMatchPost(card);
+});
+
+PlayerList.addEventListener("dragend", (e) => {
+    const card = e.target.closest(".playercardliste");
+card.style.opacity = "1";
+   
+
+    dragedelement = null;
+    playertodraged = null;
+    postdraged = null;
+
+    undisablepost();
+
+    Object.values(terrainPostes).forEach(post => {
+        post.classList.remove("selectedpost");
+    });
+});
 
 
+Object.keys(terrainPostes).forEach((key) => {
+    const post = terrainPostes[key];
 
+    post.addEventListener("dragover", (e) => {
+        if (!post.classList.contains("notapost")) {
+            e.preventDefault();
+            postdraged = key;
+            post.classList.add("selectedpost");
+        }
+    });
+
+    post.addEventListener("dragleave", () => {
+        post.classList.remove("selectedpost");
+        postdraged = null;
+    });
+
+    post.addEventListener("drop", (e) => {
+        e.preventDefault();
+
+        if (!playertodraged || post.classList.contains("notapost")) {
+            return;
+        }
+undisablepost();
+        changerPost(playertodraged, key.toUpperCase());
+
+        post.classList.remove("selectedpost");
+        postdraged = null;
+    });
+});
+//
+Reset.addEventListener('click',()=>{
+      listBntouce.forEach((el)=>{
+        el.positoninlinup="libre"
+        saveInlocalstorage()
+        showInlinup()
+        restalert.classList.remove('heading')
+        setTimeout(() => {
+            restalert.classList.add('heading')
+        }, 3000);
+      })
+})
+
+
+autoassigned.addEventListener('click',()=>{
+     const postes = ["GB","LB","RB","CB1","CB2","LM","CM1","CM2","RM","ST1","ST2"];
+    listBntouce.forEach((player) => {
+        if (player.positoninlinup.toLowerCase() !== "libre") {
+            return
+        }
+        const postDisponible = postes.find((poste) => {
+
+            const dejaOccupe = listBntouce.some((el) => {
+                return el.positoninlinup.toUpperCase() === poste;
+            });
+        
+            return !dejaOccupe && postMatch(poste, player);
+        });
+
+      
+        if (postDisponible) {
+            player.positoninlinup = postDisponible;
+        }
+
+    })
+  
+      autoassignedmsg.classList.remove('heading')
+        setTimeout(() => {
+            autoassignedmsg.classList.add('heading')
+        }, 3000);
+      
+    showInlinup()
+    showPlayer()
+    saveInlocalstorage()
+})
