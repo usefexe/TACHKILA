@@ -336,6 +336,7 @@ function sauvegarderPlayer(e) {
         }
         playerToEdit.post = newPlayer.post;
         saveInlocalstorage()
+        showInlinup()
 
 
     } else {
@@ -379,6 +380,7 @@ PlayerList.addEventListener("click", (e) => {
 
         const player = listBntouce.find((el) => {
             return el.nubmer === number;
+            
         });
 
         if (player) {
@@ -392,6 +394,7 @@ PlayerList.addEventListener("click", (e) => {
 confirmedelete.addEventListener('click', () => {
     listBntouce.splice(playertodelete, 1);
     showPlayer();
+    showInlinup()
     deleteModal.classList.add('heading')
     deletealert.classList.remove('heading')
     setTimeout(() => {
