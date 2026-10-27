@@ -6,6 +6,7 @@ const saveModal = document.getElementById("addPlayer")
 const anuller = document.getElementById("cancelModal")
 const countplayer = document.getElementById("countPlayer")
 const Reset=document.getElementById("Reset")
+ const autoassignedmsg=document.getElementById('autoassignedmsg')
 let listBntouce = null
 const autoassigned=document.getElementById('autoassigned')
 const alertchangepostsucssec = document.getElementById("sucssecpostmodif")
@@ -626,14 +627,14 @@ autoassigned.addEventListener('click',()=>{
      const postes = ["GB","LB","RB","CB1","CB2","LM","CM1","CM2","RM","ST1","ST2"];
     listBntouce.forEach((player) => {
         if (player.positoninlinup.toLowerCase() !== "libre") {
-            return;
+            return
         }
         const postDisponible = postes.find((poste) => {
 
             const dejaOccupe = listBntouce.some((el) => {
                 return el.positoninlinup.toUpperCase() === poste;
             });
-
+        
             return !dejaOccupe && postMatch(poste, player);
         });
 
@@ -642,10 +643,14 @@ autoassigned.addEventListener('click',()=>{
             player.positoninlinup = postDisponible;
         }
 
-    });
-
+    })
   
-    showInlinup();
-    showPlayer();
-    saveInlocalstorage();
+      autoassignedmsg.classList.remove('heading')
+        setTimeout(() => {
+            autoassignedmsg.classList.add('heading')
+        }, 3000);
+      
+    showInlinup()
+    showPlayer()
+    saveInlocalstorage()
 })
